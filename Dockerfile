@@ -45,6 +45,7 @@ ENV PATH /home/workspace/cmake-3.18.4-Linux-x86_64/bin:$PATH
 # install clash
 
 # wget -q --no-check-certificate -O /tmp/install.sh https://cdn.jsdelivr.net/gh/juewuy/ShellClash@master/install.sh  && sh /tmp/install.sh && source /etc/profile &> /dev/null
+# git config --global http.proxy http://proxyUsername:proxyPassword@proxy.server.com:port
 
 # install omzsh or others
 
