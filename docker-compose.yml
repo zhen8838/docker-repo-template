@@ -1,0 +1,16 @@
+version: '3.4'
+
+services:
+    zqh_dev:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        expose: 
+            - "22"
+            - "80"
+            - "443"
+        ports: 
+            - "50008:22"
+        volumes: 
+            - "/home/zhengqihang/workspace:/home/workspace"
+        command: /bin/sh -c "while sleep 1000; do :; done"
