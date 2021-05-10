@@ -48,7 +48,10 @@ ENV PATH /root/cmake-3.18.4-Linux-x86_64/bin:$PATH
 # alias clash = "/root/.local/share/clash/clash.sh"
 # export clashdir = "/root/.local/share/clash"
 # export host_ip=$(cat /etc/resolv.conf |grep "nameserver" |cut -f 2 -d " ")
-# alias proxy="export all_proxy=http://$host_ip:7890 http_proxy=http://$host_ip:7890 https_proxy=http://$host_ip:7890"
+# alias proxy="export all_proxy=http://$host_ip:7890 http_proxy=http://$host_ip:7890 https_proxy=https://$host_ip:7890"
+# alias proxy="export all_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:7890"
+# git config --global http.proxy 'socks5://127.0.0.1:7890'
+# git config --global https.proxy 'socks5://127.0.0.1:7890'
 # alias unproxy='unset all_proxy http_proxy https_proxy'
 # proxy
 
