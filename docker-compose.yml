@@ -2,6 +2,7 @@ version: '3.4'
 
 services:
     zqh_dev:
+        hostname: zqh_dev
         build:
             context: .
             dockerfile: Dockerfile
@@ -14,3 +15,9 @@ services:
         volumes: 
             - "/home/zhengqihang/workspace:/home/workspace"
         command: /bin/sh -c "while sleep 1000; do :; done"
+        # fix gdb bug
+        security_opt:
+            - seccomp:unconfined
+        cap_add:
+            - SYS_PTRACE
+        privileged: true

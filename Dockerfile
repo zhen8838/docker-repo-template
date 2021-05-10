@@ -8,7 +8,7 @@ RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
 RUN apt-get clean
 # 
 RUN apt-get update && apt-get install -y software-properties-common && add-apt-repository -y ppa:ubuntu-toolchain-r/test
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential gcc-10 g++-10 libgtk2.0-dev wget curl openssh-server git zsh
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential gcc-10 g++-10 libgtk2.0-dev wget curl openssh-server git zsh gdb systemd systemd-sysv ubuntu-standard
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 40
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 40 
 
@@ -20,27 +20,35 @@ RUN service ssh start
 
 RUN mkdir ~/.ssh && echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDrZ3hVcgA/m7ZtlSQRjkJV8dbI+mvhgs3bYApevmkjkDqNn2/Y0UvZ71byCsLSUlSqUq/2terQm9IG7iXsfR30OQC0N6fyYhcxGW8fmwdkw0ZjEcqUXQL2Vv/oyJzkDyltiP5IrcAEQ0vtzLm4sKSqMo9Bxn+HIZbMVZcCm6AVamICkErOnOdHJKis2REbiO2/Qqe5nhs9mYDMF28STECuLCFYBGujw6EYrwDsLQTQlJzZ43zqJ64z/+jlnWBxU8xBkxM1AdpUr5Og0e6vvAoGSLp4B+rwlzEucg5KHrmJbJ+b3tcxaKCueSoYBWjD1UWoMT5vDp/2vp33B7FxruNj ms-pc\zhengqihang@DESKTOP-FIFNVG6" >> ~/.ssh/authorized_keys
 
-WORKDIR /home/workspace
+WORKDIR /root
 # change default shell to zsh
 SHELL ["/bin/zsh", "-c"]
 
-RUN wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-py37_4.9.2-Linux-x86_64.sh 
-RUN zsh Miniconda3-py37_4.9.2-Linux-x86_64.sh -b
-ENV PATH /root/miniconda3/bin:$PATH
-RUN conda init zsh
-RUN pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
-RUN pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
-RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/free
-RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/main
-RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/mro
-RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/msys2
-RUN conda config --set custom_channels.conda-forge https://mirrors.sjtug.sjtu.edu.cn/anaconda/cloud/
-RUN conda config --set custom_channels.pytorch https://mirrors.sjtug.sjtu.edu.cn/anaconda/cloud/
+# use conda
+# RUN wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-py37_4.9.2-Linux-x86_64.sh 
+# RUN zsh Miniconda3-py37_4.9.2-Linux-x86_64.sh -b
+# ENV PATH /root/miniconda3/bin:$PATH
+# RUN conda init zsh
+# RUN pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
+# RUN pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
+# RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/free
+# RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/main
+# RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/mro
+# RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/msys2
+# RUN conda config --set custom_channels.conda-forge https://mirrors.sjtug.sjtu.edu.cn/anaconda/cloud/
+# RUN conda config --set custom_channels.pytorch https://mirrors.sjtug.sjtu.edu.cn/anaconda/cloud/
+
+# use global python
+RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pip
+RUN pip3 install -U pip -i https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
+RUN pip3 config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
+RUN pip3 config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
+
 
 # install cmake
 RUN wget https://gitee.com/brightxiaohan/CMake/attach_files/615214/download/cmake-3.18.4-Linux-x86_64.tar.gz
 RUN tar -zxvf cmake-3.18.4-Linux-x86_64.tar.gz
-ENV PATH /home/workspace/cmake-3.18.4-Linux-x86_64/bin:$PATH
+ENV PATH /root/cmake-3.18.4-Linux-x86_64/bin:$PATH
 
 # install clash
 
@@ -56,4 +64,5 @@ ENV PATH /home/workspace/cmake-3.18.4-Linux-x86_64/bin:$PATH
 #     -p git \
 #     -p ssh-agent \
 #     -p https://github.com/zsh-users/zsh-autosuggestions \
-#     -p https://github.com/zsh-users/zsh-completions
+#     -p https://github.com/zsh-users/zsh-completions \
+#     -p https://github.com/zsh-users/zsh-syntax-highlighting
