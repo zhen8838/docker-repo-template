@@ -45,6 +45,8 @@ ENV PATH /root/cmake-3.18.4-Linux-x86_64/bin:$PATH
 # install clash
 
 # wget -q --no-check-certificate -O /tmp/install.sh https://cdn.jsdelivr.net/gh/juewuy/ShellClash@master/install.sh  && sh /tmp/install.sh && source /etc/profile &> /dev/null
+# alias clash = "/root/.local/share/clash/clash.sh"
+# export clashdir = "/root/.local/share/clash"
 # export host_ip=$(cat /etc/resolv.conf |grep "nameserver" |cut -f 2 -d " ")
 # alias proxy="export all_proxy=http://$host_ip:7890 http_proxy=http://$host_ip:7890 https_proxy=http://$host_ip:7890"
 # alias unproxy='unset all_proxy http_proxy https_proxy'
