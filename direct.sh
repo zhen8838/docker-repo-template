@@ -1,0 +1,1 @@
+docker run -d -it --name zqh_dev -p 50008:22 --privileged=true ubuntu:18.04 /sbin/inits
