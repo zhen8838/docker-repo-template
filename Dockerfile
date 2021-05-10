@@ -31,7 +31,7 @@ SHELL ["/bin/zsh", "-c"]
 # RUN conda config --set custom_channels.pytorch https://mirrors.sjtug.sjtu.edu.cn/anaconda/cloud/
 
 # use global python
-RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pip
+RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-pip python3-dev
 RUN pip3 install -U pip -i https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
 RUN pip3 config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
 
