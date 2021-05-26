@@ -35,35 +35,35 @@ RUN git clone --depth=1 https://hub.fastgit.org/romkatv/powerlevel10k.git ${ZSH_
 RUN sed -ri 's@ZSH_THEME=\"robbyrussell\"@ZSH_THEME=\"powerlevel10k/powerlevel10k\"@' /root/.zshrc
 RUN sed -ri 's/plugins=\(git\)/plugins=\(git zsh-syntax-highlighting zsh-autosuggestions zsh-completions\)/' /root/.zshrc
 
-# # use conda
-# RUN wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-py37_4.9.2-Linux-x86_64.sh 
-# RUN zsh Miniconda3-py37_4.9.2-Linux-x86_64.sh -b
-# ENV PATH /root/miniconda3/bin:$PATH
-# RUN echo 'PATH="/root/miniconda3/bin:$PATH"' >> /root/.zshrc
-# RUN conda init zsh
-# RUN pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
-# RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/free
-# RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/main
-# RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/mro
-# RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/msys2
-# RUN conda config --set custom_channels.conda-forge https://mirrors.sjtug.sjtu.edu.cn/anaconda/cloud/
-# RUN conda config --set custom_channels.pytorch https://mirrors.sjtug.sjtu.edu.cn/anaconda/cloud/
-# RUN pip install -U pip -i https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
-# RUN pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
+# use conda
+RUN wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/miniconda/Miniconda3-py37_4.9.2-Linux-x86_64.sh 
+RUN zsh Miniconda3-py37_4.9.2-Linux-x86_64.sh -b
+ENV PATH /root/miniconda3/bin:$PATH
+RUN echo 'PATH="/root/miniconda3/bin:$PATH"' >> /root/.zshrc
+RUN conda init zsh
+RUN pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
+RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/free
+RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/main
+RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/mro
+RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/msys2
+RUN conda config --set custom_channels.conda-forge https://mirrors.sjtug.sjtu.edu.cn/anaconda/cloud/
+RUN conda config --set custom_channels.pytorch https://mirrors.sjtug.sjtu.edu.cn/anaconda/cloud/
+RUN pip install -U pip -i https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
+RUN pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
 
-# # # install cmake
-# RUN wget https://gitee.com/brightxiaohan/CMake/attach_files/615214/download/cmake-3.18.4-Linux-x86_64.tar.gz
-# RUN tar -zxvf cmake-3.18.4-Linux-x86_64.tar.gz
-# ENV PATH /root/cmake-3.18.4-Linux-x86_64/bin:$PATH
-# RUN echo 'PATH="/root/cmake-3.18.4-Linux-x86_64/bin:$PATH"' >> /root/.zshrc
+# # install cmake
+RUN wget https://gitee.com/brightxiaohan/CMake/attach_files/615214/download/cmake-3.18.4-Linux-x86_64.tar.gz
+RUN tar -zxvf cmake-3.18.4-Linux-x86_64.tar.gz
+ENV PATH /root/cmake-3.18.4-Linux-x86_64/bin:$PATH
+RUN echo 'PATH="/root/cmake-3.18.4-Linux-x86_64/bin:$PATH"' >> /root/.zshrc
 
-# # install nncase deps
-# RUN pip install conan tensorflow==2.4.1 matplotlib pillow onnxruntime trash-cli
-# RUN pip install torch==1.4.0 torchvision==0.5.0
+# install nncase deps
+RUN pip install conan tensorflow==2.4.1 matplotlib pillow onnxruntime trash-cli
+RUN pip install torch==1.4.0 torchvision==0.5.0
 
-# # # install gcc 10
-# RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
-# RUN sed -i 's/http:\/\/ppa.launchpad.net/https:\/\/launchpad.proxy.ustclug.org/g' /etc/apt/sources.list /etc/apt/sources.list.d/*.list
-# RUN apt-get update && apt-get install -y --no-install-recommends gcc-10 g++-10
-# RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 40
-# RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 40 
+# # install gcc 10
+RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
+RUN sed -i 's/http:\/\/ppa.launchpad.net/https:\/\/launchpad.proxy.ustclug.org/g' /etc/apt/sources.list /etc/apt/sources.list.d/*.list
+RUN apt-get update && apt-get install -y --no-install-recommends gcc-10 g++-10
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 40
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 40 
