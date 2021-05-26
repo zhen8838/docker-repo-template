@@ -57,7 +57,7 @@ ENV PATH /root/cmake-3.18.4-Linux-x86_64/bin:$PATH
 RUN echo 'PATH="/root/cmake-3.18.4-Linux-x86_64/bin:$PATH"' >> /root/.zshrc
 
 # install nncase deps
-RUN pip install conan tensorflow==2.4.1 matplotlib pillow onnxruntime trash-cli
+RUN pip install pytest conan tensorflow==2.4.1 matplotlib pillow onnxruntime trash-cli
 RUN pip install torch==1.4.0 torchvision==0.5.0
 
 # install gcc 10
