@@ -9,7 +9,6 @@ RUN echo 'root:password' | chpasswd
 RUN sed -ri 's/PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config
 RUN sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN /usr/sbin/sshd -D &
 
 RUN mkdir ~/.ssh 
 RUN echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDrZ3hVcgA/m7ZtlSQRjkJV8dbI+mvhgs3bYApevmkjkDqNn2/Y0UvZ71byCsLSUlSqUq/2terQm9IG7iXsfR30OQC0N6fyYhcxGW8fmwdkw0ZjEcqUXQL2Vv/oyJzkDyltiP5IrcAEQ0vtzLm4sKSqMo9Bxn+HIZbMVZcCm6AVamICkErOnOdHJKis2REbiO2/Qqe5nhs9mYDMF28STECuLCFYBGujw6EYrwDsLQTQlJzZ43zqJ64z/+jlnWBxU8xBkxM1AdpUr5Og0e6vvAoGSLp4B+rwlzEucg5KHrmJbJ+b3tcxaKCueSoYBWjD1UWoMT5vDp/2vp33B7FxruNj ms-pc\zhengqihang@DESKTOP-FIFNVG6" >> ~/.ssh/authorized_keys
@@ -23,9 +22,9 @@ SHELL ["/bin/zsh", "-c"]
 
 # RUN git config --global --unset http.proxy
 # RUN git config --global --unset https.proxy
-RUN REMOTE=https://gitee.com/mirrors/oh-my-zsh.git
 # CMD [ "sh" "-c" "$(curl -fsSL https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh)"]
 
+ENV REMOTE=https://gitee.com/mirrors/oh-my-zsh.git
 RUN wget https://hub.fastgit.org/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 
 RUN git clone --depth=1 https://hub.fastgit.org/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -61,9 +60,14 @@ RUN echo 'PATH="/root/cmake-3.18.4-Linux-x86_64/bin:$PATH"' >> /root/.zshrc
 RUN pip install conan tensorflow==2.4.1 matplotlib pillow onnxruntime trash-cli
 RUN pip install torch==1.4.0 torchvision==0.5.0
 
-# # install gcc 10
+# install gcc 10
 RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
 RUN sed -i 's/http:\/\/ppa.launchpad.net/https:\/\/launchpad.proxy.ustclug.org/g' /etc/apt/sources.list /etc/apt/sources.list.d/*.list
 RUN apt-get update && apt-get install -y --no-install-recommends gcc-10 g++-10
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 40
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 40 
+
+# set zsh and sshd
+RUN chsh -s /bin/zsh
+RUN echo "export VISIBLE=now" >> /etc/profile
+CMD ["/usr/sbin/sshd", "-D"]
