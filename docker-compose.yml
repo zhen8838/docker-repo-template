@@ -13,8 +13,7 @@ services:
         ports: 
             - "50008:22"
         volumes: 
-            - "/home/zhengqihang/workspace:/home/workspace"
-            - "/data:/data"
+            - "/Users/lisa/Documents/workspace:/home/workspace"
             - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
         command: /bin/sh -c "while sleep 1000; do :; done"
         # fix gdb bug
