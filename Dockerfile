@@ -4,11 +4,11 @@ RUN sed -i s@/ports.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
 RUN apt-get update 
 RUN apt-get install -y --no-install-recommends build-essential libgtk2.0-dev wget curl openssh-server git zsh gdb software-properties-common
 
-RUN mkdir /var/run/sshd
-RUN echo 'root:password' | chpasswd
-RUN sed -ri 's/PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config
-RUN sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
-RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+# RUN mkdir /var/run/sshd
+# RUN echo 'root:password' | chpasswd
+# RUN sed -ri 's/PermitEmptyPasswords no/PermitEmptyPasswords yes/' /etc/ssh/sshd_config
+# RUN sed -ri 's/^UsePAM yes/UsePAM no/' /etc/ssh/sshd_config
+# RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 RUN mkdir ~/.ssh 
 RUN echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDrZ3hVcgA/m7ZtlSQRjkJV8dbI+mvhgs3bYApevmkjkDqNn2/Y0UvZ71byCsLSUlSqUq/2terQm9IG7iXsfR30OQC0N6fyYhcxGW8fmwdkw0ZjEcqUXQL2Vv/oyJzkDyltiP5IrcAEQ0vtzLm4sKSqMo9Bxn+HIZbMVZcCm6AVamICkErOnOdHJKis2REbiO2/Qqe5nhs9mYDMF28STECuLCFYBGujw6EYrwDsLQTQlJzZ43zqJ64z/+jlnWBxU8xBkxM1AdpUr5Og0e6vvAoGSLp4B+rwlzEucg5KHrmJbJ+b3tcxaKCueSoYBWjD1UWoMT5vDp/2vp33B7FxruNj ms-pc\zhengqihang@DESKTOP-FIFNVG6" >> ~/.ssh/authorized_keys
@@ -66,9 +66,9 @@ RUN echo 'PATH="/root/cmake-3.20.3-linux-aarch64/bin:$PATH"' >> /root/.zshrc
 # RUN apt-get update && apt-get install -y --no-install-recommends gcc-10 g++-10
 # RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 40
 # RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 40 
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 40
+# RUN update-alternatives --install /usr/bin/python python /usr/bin/python3 40
 
 # set zsh and sshd
 RUN chsh -s /bin/zsh
-RUN echo "export VISIBLE=now" >> /etc/profile
-CMD ["/usr/sbin/sshd", "-D"]
+# RUN echo "export VISIBLE=now" >> /etc/profile
+# CMD ["/usr/sbin/sshd", "-D"]
