@@ -50,10 +50,14 @@ RUN conda config --set custom_channels.pytorch https://mirrors.sjtug.sjtu.edu.cn
 RUN pip install -U pip -i https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
 RUN pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
 
-# # install cmake
+# setup git
+RUN git config --global user.name "郑启航"
+RUN git config --global user.email  "597323109@qq.com"
 
 # install nncase deps
-RUN pip install cmake pytest conan tensorflow==2.4.1 matplotlib pillow onnxruntime trash-cli
+RUN pip install cmake pytest conan matplotlib pillow onnxruntime trash-cli
+RUN echo 'alias rm=trash' >> /root/.zshrc
+# tensorflow is too big...
 
 # install gcc 10
 RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
