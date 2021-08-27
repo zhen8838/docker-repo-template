@@ -51,7 +51,7 @@ RUN pip install -U pip -i https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
 RUN pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
 
 # setup git
-RUN git config --global user.name "郑启航"
+RUN git config --global user.name "zhengqihang"
 RUN git config --global user.email  "597323109@qq.com"
 
 # install nncase deps

@@ -14,7 +14,7 @@
 	"service": "zqh_dev",
 	// The optional 'workspaceFolder' property is the path VS Code should open by default when
 	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
-	"workspaceFolder": "/home/workspace",
+	"workspaceFolder": "/root/workspace",
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"terminal.integrated.automationShell.linux": "/bin/zsh"

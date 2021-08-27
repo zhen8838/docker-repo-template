@@ -13,7 +13,7 @@ services:
         ports: 
             - "50008:22"
         volumes: 
-            - "/home/zhengqihang/workspace:/home/workspace"
+            - "/home/zhengqihang/workspace:/root/workspace"
             - "/data:/data"
             - "/sys/fs/cgroup:/sys/fs/cgroup:ro"
         command: /bin/sh -c "while sleep 1000; do :; done"
