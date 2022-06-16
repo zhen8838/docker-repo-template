@@ -25,12 +25,12 @@ SHELL ["/bin/zsh", "-c"]
 # CMD [ "sh" "-c" "$(curl -fsSL https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh)"]
 
 ENV REMOTE=https://gitee.com/mirrors/oh-my-zsh.git
-RUN wget https://hub.fastgit.org/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
+RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 
-RUN git clone --depth=1 https://hub.fastgit.org/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-RUN git clone --depth=1 https://hub.fastgit.org/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
-RUN git clone --depth=1 https://hub.fastgit.org/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-RUN git clone --depth=1 https://hub.fastgit.org/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+RUN git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+RUN git clone --depth=1 https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
+RUN git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 RUN sed -ri 's@ZSH_THEME=\"robbyrussell\"@ZSH_THEME=\"powerlevel10k/powerlevel10k\"@' /root/.zshrc
 RUN sed -ri 's/plugins=\(git\)/plugins=\(git zsh-syntax-highlighting zsh-autosuggestions zsh-completions\)/' /root/.zshrc
 
@@ -52,7 +52,7 @@ RUN pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/s
 
 # setup git
 RUN git config --global user.name "zhengqihang"
-RUN git config --global user.email  "597323109@qq.com"
+RUN git config --global user.email "597323109@qq.com"
 
 # install nncase deps
 RUN pip install cmake pytest conan matplotlib pillow onnxruntime trash-cli
@@ -60,13 +60,14 @@ RUN echo 'alias rm=trash' >> /root/.zshrc
 # tensorflow is too big...
 
 # install gcc 10
-RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
-RUN sed -i 's/http:\/\/ppa.launchpad.net/https:\/\/launchpad.proxy.ustclug.org/g' /etc/apt/sources.list /etc/apt/sources.list.d/*.list
-RUN apt-get update && apt-get install -y --no-install-recommends gcc-10 g++-10
-RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 40
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 40 
+# RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
+# RUN sed -i 's/http:\/\/ppa.launchpad.net/https:\/\/launchpad.proxy.ustclug.org/g' /etc/apt/sources.list /etc/apt/sources.list.d/*.list
+# RUN apt-get update && apt-get install -y --no-install-recommends gcc-10 g++-10
+# RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 40
+# RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 40 
 
 # set zsh and sshd
 RUN chsh -s /bin/zsh
 RUN echo "export VISIBLE=now" >> /etc/profile
 CMD ["/usr/sbin/sshd", "-D"]
+# NOTE need manual `service ssh start`
