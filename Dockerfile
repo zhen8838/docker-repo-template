@@ -60,11 +60,11 @@ RUN echo 'alias rm=trash' >> /root/.zshrc
 # tensorflow is too big...
 
 # install gcc 10
-# RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
-# RUN sed -i 's/http:\/\/ppa.launchpad.net/https:\/\/launchpad.proxy.ustclug.org/g' /etc/apt/sources.list /etc/apt/sources.list.d/*.list
-# RUN apt-get update && apt-get install -y --no-install-recommends gcc-10 g++-10
-# RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 40
-# RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 40 
+RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
+RUN sed -i 's/http:\/\/ppa.launchpad.net/https:\/\/launchpad.proxy.ustclug.org/g' /etc/apt/sources.list /etc/apt/sources.list.d/*.list
+RUN apt-get update && apt-get install -y --no-install-recommends gcc-10 g++-10
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 40
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 40 
 
 # set zsh and sshd
 RUN chsh -s /bin/zsh
