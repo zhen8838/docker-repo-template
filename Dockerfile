@@ -1,8 +1,9 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 #
 RUN sed -i s@/archive.ubuntu.com/@/mirrors.aliyun.com/@g /etc/apt/sources.list
-RUN apt-get update 
-RUN apt-get install -y --no-install-recommends build-essential libgtk2.0-dev wget curl openssh-server git zsh gdb software-properties-common
+RUN apt update
+RUN DEBIAN_FRONTEND=noninteractive TZ=Etc/UTC apt -y install tzdata
+RUN apt install -y --no-install-recommends build-essential libgtk2.0-dev wget curl openssh-server git zsh gdb software-properties-common
 
 RUN mkdir /var/run/sshd
 RUN echo 'root:password' | chpasswd
@@ -24,8 +25,7 @@ SHELL ["/bin/zsh", "-c"]
 # RUN git config --global --unset https.proxy
 # CMD [ "sh" "-c" "$(curl -fsSL https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh)"]
 
-ENV REMOTE=https://gitee.com/mirrors/oh-my-zsh.git
-RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
+RUN wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O - | zsh || true
 
 RUN git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 RUN git clone --depth=1 https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:=~/.oh-my-zsh/custom}/plugins/zsh-completions
@@ -40,15 +40,18 @@ RUN zsh Miniconda3-py37_4.9.2-Linux-x86_64.sh -b
 ENV PATH /root/miniconda3/bin:$PATH
 RUN echo 'PATH="/root/miniconda3/bin:$PATH"' >> /root/.zshrc
 RUN conda init zsh
-RUN pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
-RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/free
-RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/main
-RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/mro
-RUN conda config --add channels https://mirrors.sjtug.sjtu.edu.cn/anaconda/pkgs/msys2
-RUN conda config --set custom_channels.conda-forge https://mirrors.sjtug.sjtu.edu.cn/anaconda/cloud/
-RUN conda config --set custom_channels.pytorch https://mirrors.sjtug.sjtu.edu.cn/anaconda/cloud/
-RUN pip install -U pip -i https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
-RUN pip config set global.index-url https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple
+RUN conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main
+RUN conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r
+RUN conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys
+RUN conda config --set custom_channels.conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+RUN conda config --set custom_channels.msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+RUN conda config --set custom_channels.bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+RUN conda config --set custom_channels.menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+RUN conda config --set custom_channels.pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+RUN conda config --set custom_channels.pytorch-lts: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+RUN conda config --set custom_channels.simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud
+RUN pip install -U pip -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 # setup git
 RUN git config --global user.name "zhengqihang"
@@ -60,9 +63,7 @@ RUN echo 'alias rm=trash' >> /root/.zshrc
 # tensorflow is too big...
 
 # install gcc 10
-RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test
-RUN sed -i 's/http:\/\/ppa.launchpad.net/https:\/\/launchpad.proxy.ustclug.org/g' /etc/apt/sources.list /etc/apt/sources.list.d/*.list
-RUN apt-get update && apt-get install -y --no-install-recommends gcc-10 g++-10
+RUN apt update && apt install -y --no-install-recommends gcc-10 g++-10
 RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-10 40
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-10 40 
 

@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.8'
 
 services:
     zqh_dev:
@@ -23,4 +23,4 @@ services:
         cap_add:
             - SYS_PTRACE
         privileged: true
-        shm_size: 2147483648 # 2gb shm
+        shm_size: '20gb' # 2gb shm
